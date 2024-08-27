@@ -19,14 +19,18 @@ import { z } from 'zod'
 export default function Orders() {
   const [searchParams, setSearchParams] = useSearchParams()
 
+  const orderId = searchParams.get('orderId')
+  const customerName = searchParams.get('customerName')
+  const status = searchParams.get('status')
+
   const pageIndex = z.coerce // Transforma algo em número
     .number()
     .transform((page) => page - 1) // Transforma a página em pag -1
     .parse(searchParams.get('page') ?? '1') // Se não tiver página informada no search params será 1
 
   const { data: result } = useQuery({
-    queryKey: ['orders', pageIndex], // Toda vez que minha queryFn depender de algum parâmetro, precisa passar no queryKey
-    queryFn: () => getOrders({ pageIndex }),
+    queryKey: ['orders', pageIndex, orderId, customerName, status], // Toda vez que minha queryFn depender de algum parâmetro, precisa passar no queryKey
+    queryFn: () => getOrders({ pageIndex, customerName, orderId, status: status === 'all' ? null : status }),
   })
 
   function handlePaginate(pageIndex: number) {
