@@ -17,7 +17,7 @@ const orderStatusMap: Record<OrderStatus, string> = {
   processing: 'Em preparo',
 }
 
-export function OrderStatus({ status }: OrderStatusProps) {
+export default function OrderStatus({ status }: OrderStatusProps) {
   return (
     <div className="flex items-center gap-2">
       {status === 'pending' && (
