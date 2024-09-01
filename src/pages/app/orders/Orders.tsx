@@ -15,6 +15,7 @@ import { useQuery } from '@tanstack/react-query'
 import { getOrders } from '@/api/get-orders'
 import { useSearchParams } from 'react-router-dom'
 import { z } from 'zod'
+import OrderTableSkeleton from './OrderTableSkeleton'
 
 export default function Orders() {
   const [searchParams, setSearchParams] = useSearchParams()
@@ -28,7 +29,7 @@ export default function Orders() {
     .transform((page) => page - 1) // Transforma a página em pag -1
     .parse(searchParams.get('page') ?? '1') // Se não tiver página informada no search params será 1
 
-  const { data: result } = useQuery({
+  const { data: result, isLoading: isLoadingOrders } = useQuery({
     queryKey: ['orders', pageIndex, orderId, customerName, status], // Toda vez que minha queryFn depender de algum parâmetro, precisa passar no queryKey
     queryFn: () => getOrders({ pageIndex, customerName, orderId, status: status === 'all' ? null : status }),
   })
@@ -66,10 +67,10 @@ export default function Orders() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {result &&
-                result.orders.map((order) => {
-                  return <OrderTableRow key={order.orderId} order={order} />
-                })}
+              {isLoadingOrders && <OrderTableSkeleton />}
+              {result && result.orders.map((order) => {
+                return <OrderTableRow key={order.orderId} order={order} />
+              })}
             </TableBody>
           </Table>
         </div>
