@@ -60,7 +60,12 @@ export default function Pagination({
             <ChevronRight className="h-4 w-4" />
             <span className="sr-only">Próxima página</span>
           </Button>
-          <Button variant="outline" className="h-8 w-8 p-0">
+          <Button
+            onClick={() => onPageChange(pages - 1)}
+            variant="outline"
+            className="h-8 w-8 p-0"
+            disabled={pages <= pageIndex + 1}
+          >
             <ChevronsRight className="h-4 w-4" />
             <span className="sr-only">Última página</span>
           </Button>

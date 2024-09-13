@@ -32,8 +32,8 @@ export default function OrderTableFilters() {
     resolver: zodResolver(orderFilterSchema),
     defaultValues: {
       customerName: customerName ?? '',
-      status: status ?? '',
-      orderId: orderId ?? 'all',
+      status: status ?? 'all',
+      orderId: orderId ?? '',
     }
   })
 
