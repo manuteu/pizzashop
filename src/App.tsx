@@ -7,7 +7,7 @@ import { ThemeProvider } from './components/theme/ThemeProvider'
 import { QueryClientProvider } from '@tanstack/react-query'
 import { queryClient } from './lib/react-query'
 
-function App() {
+export function App() {
 
   return (
     <HelmetProvider>
